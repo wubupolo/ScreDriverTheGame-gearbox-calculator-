@@ -57,33 +57,23 @@ startingrpm = 1.25
     gearratios.append(t3)"""
 
 for i in range(len(histori)):
-    # 1. Progress Tracking
     percent = (i + 1) / len(histori) * 100
     print(f"\r{percent:.1f}%", end="")
     
-    # 2. Start with your base value in a list
-    # This acts as our "Level 0"
     current_layer = [startingrpm]
     
-    # 3. Dynamically loop through every stage in this gearbox configuration
-    # This replaces your hardcoded t1, t2, t3
     for stage in histori[i]:
         next_layer = []
         
-        # Calculate the two ratios for this stage
         ratio_a = stage[0][0] / stage[1][0]
         ratio_b = stage[0][1] / stage[1][1]
         
-        # Multiply every result from the PREVIOUS stage by the 2 options in THIS stage
         for val in current_layer:
             next_layer.append(val * ratio_a)
             next_layer.append(val * ratio_b)
             
-        # Move to the next level
         current_layer = next_layer
 
-    # 4. Cleanup: Deduplicate and Sort the final results
-    # current_layer now contains what 't3' used to contain
     final_gears = sorted(list(set(current_layer)))
     gearratios.append(final_gears)
 
